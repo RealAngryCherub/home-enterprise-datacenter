@@ -5,7 +5,7 @@
 ![Wazuh](https://img.shields.io/badge/Wazuh-4.9-cyan)
 ![VLAN](https://img.shields.io/badge/VLAN-802.1Q-navy)
 
-> Segmented, default-deny homelab routing fabric for 8-zone 802.1Q isolation with centralized SIEM. Bridges enterprise-class network segmentation (pfSense + managed switch) to a Proxmox VE compute cluster, enabling safe adjacent labs without cross-zone contamination.
+> Segmented, default-deny homelab routing fabric for an 8-Zone 802.1Q Default-Deny Architecture with centralized SIEM. Bridges enterprise-class network segmentation (pfSense + managed switch) to a Proxmox VE compute cluster, enabling safe adjacent labs without cross-zone contamination.
 
 ## Architecture
 
@@ -53,10 +53,8 @@ flowchart TB
 
     classDef gateway fill:#1A365D,color:#fff,stroke:#333;
     classDef compute fill:#4A5568,color:#fff,stroke:#333;
-    classDef staged fill:#f4f4f4,color:#666,stroke:#999,stroke-dasharray:5 5;
     class FW gateway;
-    class SW,PVE,AD,RNODE,WAZUH,WKS compute;
-    class RPX,BKUP,SANDBOX staged;
+    class SW,PVE,AD,RNODE,WAZUH,WKS,RPX,BKUP,SANDBOX compute;
 ```
 
 > [!IMPORTANT]
