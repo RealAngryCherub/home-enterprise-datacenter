@@ -1,0 +1,47 @@
+flowchart TB
+    subgraph WAN["WAN"]
+        ISP[ISP Gateway]
+    end
+    subgraph Edge["Edge Routing"]
+        FW[pfSense Gateway]
+    end
+    subgraph TRUNK["802.1Q Trunk"]
+        SW[Managed L2 Switch]
+    end
+    subgraph VLAN10["VLAN 10 — Management"]
+        PVE[Proxmox VE Nodes]
+    end
+    subgraph VLAN20["VLAN 20 — Trusted LAN"]
+        WKS[Admin Workstations]
+    end
+    subgraph VLAN30["VLAN 30 — Core Services"]
+        AD[Win Server AD/DNS]
+        WAZUH[Wazuh SIEM]
+    end
+    subgraph VLAN40["VLAN 40 — Automation"]
+        RNODE[Linux Worker Nodes]
+    end
+    subgraph VLAN50["VLAN 50 — IoT & Guest"]
+        IOT[Isolated Smart Devices]
+    end
+    subgraph VLAN60["VLAN 60 — Ingress DMZ"]
+        RPX[Reverse Proxy]
+    end
+    subgraph VLAN70["VLAN 70 — Storage & OOB"]
+        BKUP[Backup Fabric]
+    end
+    subgraph VLAN80["VLAN 80 — Lab Sandbox"]
+        SANDBOX[Testing Containers]
+    end
+
+    ISP ==> FW ==> SW
+    SW --> PVE & WKS & AD & RNODE
+    SW -.-> IOT & RPX & BKUP & SANDBOX
+    FW -.->|Syslog Forwarding| WAZUH
+
+    classDef gateway fill:#1A365D,color:#fff,stroke:#333;
+    classDef compute fill:#4A5568,color:#fff,stroke:#333;
+    classDef staged fill:#f4f4f4,color:#666,stroke:#999,stroke-dasharray:5 5;
+    class FW gateway;
+    class SW,PVE,AD,RNODE,WAZUH,WKS compute;
+    class RPX,BKUP,SANDBOX staged;
